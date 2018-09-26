@@ -23,10 +23,15 @@ public class UserInfController {
     private UserInfService userInfService;
 
     @RequestMapping("/getUserInf")
-    public JSONObject getUserInfo(){
+    public String getUserInfo(){
        UserInf userInf =  userInfService.getUserInf("111");
-       JSONObject json = new JSONObject();
-       json.element("data","helloworld");
+        return "Good Morning";
+    }
+    @RequestMapping("/getUserInfJson")
+    public JSONObject getUserInfoJson(){
+        UserInf userInf =  userInfService.getUserInf("111");
+        JSONObject json = new JSONObject();
+        json.element("data",userInf);
         return json;
     }
 }
