@@ -6,6 +6,9 @@ import com.wgw.cateringsystem.service.UserInfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Date: 2018/9/26 16:39
  *
@@ -19,6 +22,12 @@ public class UserInfServiceImpl implements UserInfService{
 
     @Override
     public UserInf getUserInf(String userId) {
-        return userInfRespository.getOne(userId);
+        Optional<UserInf> userInf = userInfRespository.findById(userId);
+        return userInf.get();
+    }
+    @Override
+    public List<UserInf> getAllUserInf() {
+        List<UserInf> userInfList = userInfRespository.findAll();
+        return userInfList;
     }
 }

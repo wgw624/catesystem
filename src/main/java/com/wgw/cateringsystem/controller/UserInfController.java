@@ -6,8 +6,11 @@ import com.wgw.cateringsystem.service.UserInfService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Date: 2018/9/26 16:17
@@ -17,21 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/userInfController")
+@CrossOrigin
 public class UserInfController {
 
     @Autowired
     private UserInfService userInfService;
 
     @RequestMapping("/getUserInf")
-    public String getUserInfo(){
-       UserInf userInf =  userInfService.getUserInf("111");
-        return "Good Morning";
-    }
-    @RequestMapping("/getUserInfJson")
-    public JSONObject getUserInfoJson(){
+    public JSONObject getUserInfo(){
         UserInf userInf =  userInfService.getUserInf("111");
+
         JSONObject json = new JSONObject();
         json.element("data",userInf);
+        return json;
+    }
+    @RequestMapping("/getAllUserInf")
+    public JSONObject getAllUserInfo(){
+        List<UserInf> userInfList =  userInfService.getAllUserInf();
+
+        JSONObject json = new JSONObject();
+        json.element("data",userInfList);
         return json;
     }
 }
