@@ -42,4 +42,12 @@ public class UserInfController {
         json.element("data",userInfList);
         return json;
     }
+
+    @RequestMapping("/login")
+    public JSONObject login(String username,String password){
+        JSONObject json = new JSONObject();
+        System.out.println(username+"-->"+password);
+        json.element("isLogin",true);
+        return json;
+    }
 }
