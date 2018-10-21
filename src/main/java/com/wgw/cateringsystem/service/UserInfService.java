@@ -13,4 +13,5 @@ import java.util.List;
 public interface UserInfService {
   UserInf getUserInf(String userId);
   List<UserInf> getAllUserInf();
+  List<UserInf> getUserByParam(UserInf userInf);
 }

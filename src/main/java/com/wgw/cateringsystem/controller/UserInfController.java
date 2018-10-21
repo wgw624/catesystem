@@ -6,9 +6,7 @@ import com.wgw.cateringsystem.service.UserInfService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,11 +41,22 @@ public class UserInfController {
         return json;
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value="/login")
+    @ResponseBody
     public JSONObject login(String username,String password){
         JSONObject json = new JSONObject();
         System.out.println(username+"-->"+password);
-        json.element("isLogin",true);
+        UserInf user = new UserInf();
+        user.setUserName(username);
+        user.setPassword(password);
+        List<UserInf> list = userInfService.getUserByParam(user);
+        if(list.size()>0){
+            json.element("isLogin",true);
+            json.element("userInf",list.get(0));
+        }else{
+            json.element("isLogin",false);
+        }
+
         return json;
     }
 }
