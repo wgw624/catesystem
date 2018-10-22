@@ -27,6 +27,17 @@ public class UserInf {
     @Column
     private String phone;
 
+    @ManyToOne
+    @JoinColumn(name="roleId")
+    private Role roleInf;
+
+    public Role getRoleInf() {
+        return roleInf;
+    }
+
+    public void setRoleInf(Role roleInf) {
+        this.roleInf = roleInf;
+    }
 
     public String getSysId() {
         return sysId;
