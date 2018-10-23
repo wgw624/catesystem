@@ -58,4 +58,10 @@ public class UserInfServiceImpl implements UserInfService{
         });
         return userInfList;
     }
+
+    @Override
+    public UserInf saveUserInf(UserInf userInf) {
+        UserInf usr  = userInfRespository.save(userInf);
+        return usr;
+    }
 }
