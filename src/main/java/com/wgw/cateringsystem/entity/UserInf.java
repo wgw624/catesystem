@@ -2,6 +2,7 @@ package com.wgw.cateringsystem.entity;
 
 import javax.persistence.*;
 
+
 /**
  * Date: 2018/9/26 15:55
  *
@@ -11,7 +12,6 @@ import javax.persistence.*;
 @Table(name="USER_INF")
 public class UserInf {
     @Id
-    @GeneratedValue
     private String sysId;
 
     @Column
@@ -26,6 +26,17 @@ public class UserInf {
     private String sex;
     @Column
     private String phone;
+
+    @Transient
+    private String roleId;
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
     @ManyToOne
     @JoinColumn(name="roleId")

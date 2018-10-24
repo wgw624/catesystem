@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Date: 2018/10/23 16:19
@@ -22,5 +23,11 @@ public class RoleServiceImp implements RoleService{
     @Override
     public List<Role> getAllRole() {
         return roleRespository.findAll();
+    }
+
+    @Override
+    public Role getRoleById(String roleId) {
+        Optional<Role> role = roleRespository.findById(roleId);
+        return role.get();
     }
 }
