@@ -30,4 +30,9 @@ public class RoleServiceImp implements RoleService{
         Optional<Role> role = roleRespository.findById(roleId);
         return role.get();
     }
+
+    @Override
+    public Role saveRole(Role role) {
+        return roleRespository.save(role);
+    }
 }

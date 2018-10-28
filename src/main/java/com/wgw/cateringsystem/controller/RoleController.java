@@ -6,10 +6,12 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Date: 2018/10/23 16:28
@@ -40,5 +42,16 @@ public class RoleController {
             json.element("msg","没有查到角色信息");
         }
         return json;
+    }
+    @RequestMapping("/saveRole")
+    public JSONObject saveRole(@RequestBody Role role){
+//        roleService
+        role.setRoleId(UUID.randomUUID().toString().replace("_",""));
+        Role role1 = roleService.saveRole(role);
+        JSONObject json = new JSONObject();
+        json.element("status",true);
+        json.element("data",role1);
+        return json;
+
     }
 }

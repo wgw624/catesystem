@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Date: 2018/9/26 16:17
@@ -67,7 +66,13 @@ public class UserInfController {
         UserInf user = new UserInf();
         user.setUserName(username);
         user.setPassword(password);
-        List<UserInf> list = userInfService.getUserByParam(user);
+       // List<UserInf> list = userInfService.getUserByParam(user);
+        List<UserInf> list = new ArrayList<UserInf>();
+        UserInf userInf = new UserInf();
+        userInf.setSysId("111");
+        userInf.setUserName("wgw");
+        userInf.setShowName("位光伟");
+        list.add(userInf);
         if(list.size()>0){
             json.element("isLogin",true);
             UserInf usr = list.get(0);
@@ -84,10 +89,15 @@ public class UserInfController {
     public JSONObject saveUser(@RequestBody UserInf userInf){
         JSONObject json = new JSONObject();
         try{
-
             userInf.setSysId(UUID.randomUUID().toString().replace("_",""));
-            Role role = roleService.getRoleById("1");
-            userInf.setRoleInf(role);
+            Set<Role> setRole = new HashSet<Role>();
+            String []roleIdAr = userInf.getRoleId();
+            if(roleIdAr!=null && roleIdAr.length>0){
+                for(int i=0;i<roleIdAr.length;i++){
+                    setRole.add(roleService.getRoleById(roleIdAr[i]));
+                }
+                userInf.setSetRole(setRole);
+            }
 
             UserInf user = userInfService.saveUserInf(userInf);
 //            UserInf user = userInf;

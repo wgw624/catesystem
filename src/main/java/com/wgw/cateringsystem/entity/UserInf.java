@@ -1,6 +1,8 @@
 package com.wgw.cateringsystem.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -28,26 +30,25 @@ public class UserInf {
     private String phone;
 
     @Transient
-    private String roleId;
+    private String[] roleId;
 
-    public String getRoleId() {
+    public String[] getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
+    public void setRoleId(String[] roleId) {
         this.roleId = roleId;
     }
 
-    @ManyToOne
-    @JoinColumn(name="roleId")
-    private Role roleInf;
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "setUser")
+    private Set<Role> setRole = new HashSet<Role>();
 
-    public Role getRoleInf() {
-        return roleInf;
+    public Set<Role> getSetRole() {
+        return setRole;
     }
 
-    public void setRoleInf(Role roleInf) {
-        this.roleInf = roleInf;
+    public void setSetRole(Set<Role> setRole) {
+        this.setRole = setRole;
     }
 
     public String getSysId() {

@@ -17,7 +17,8 @@ public class Role {
     @Column(name="describe_Inf",length = 1024)
     private String describe;
 
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "roleInf")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="user_role",joinColumns =@JoinColumn(name="uId"),inverseJoinColumns =@JoinColumn(name="rId"))
     private Set<UserInf> setUser = new HashSet<UserInf>();
 
     public String getRoleId() {
