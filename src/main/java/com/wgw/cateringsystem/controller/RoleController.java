@@ -46,7 +46,7 @@ public class RoleController {
     @RequestMapping("/saveRole")
     public JSONObject saveRole(@RequestBody Role role){
 //        roleService
-        role.setRoleId(UUID.randomUUID().toString().replace("_",""));
+        role.setId(UUID.randomUUID().toString().replace("_",""));
         Role role1 = roleService.saveRole(role);
         JSONObject json = new JSONObject();
         json.element("status",true);

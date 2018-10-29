@@ -1,15 +1,16 @@
 package com.wgw.cateringsystem.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="ROLE")
-public class Role {
+public class Role implements Serializable{
     @Id
-    @Column(name="Role_Id")
-    private String roleId;
+    @Column(name="role_id")
+    private String id;
 
     @Column(name="name")
     private String name;
@@ -17,16 +18,15 @@ public class Role {
     @Column(name="describe_Inf",length = 1024)
     private String describe;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="user_role",joinColumns =@JoinColumn(name="uId"),inverseJoinColumns =@JoinColumn(name="rId"))
+    @ManyToMany(mappedBy = "setRole")
     private Set<UserInf> setUser = new HashSet<UserInf>();
 
-    public String getRoleId() {
-        return roleId;
+    public String getId() {
+        return id;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

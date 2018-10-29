@@ -66,13 +66,13 @@ public class UserInfController {
         UserInf user = new UserInf();
         user.setUserName(username);
         user.setPassword(password);
-       // List<UserInf> list = userInfService.getUserByParam(user);
-        List<UserInf> list = new ArrayList<UserInf>();
-        UserInf userInf = new UserInf();
-        userInf.setSysId("111");
-        userInf.setUserName("wgw");
-        userInf.setShowName("位光伟");
-        list.add(userInf);
+        List<UserInf> list = userInfService.getUserByParam(user);
+//        List<UserInf> list = new ArrayList<UserInf>();
+//        UserInf userInf = new UserInf();
+//        userInf.setId("111");
+//        userInf.setUserName("wgw");
+//        userInf.setShowName("位光伟");
+//        list.add(userInf);
         if(list.size()>0){
             json.element("isLogin",true);
             UserInf usr = list.get(0);
@@ -89,9 +89,9 @@ public class UserInfController {
     public JSONObject saveUser(@RequestBody UserInf userInf){
         JSONObject json = new JSONObject();
         try{
-            userInf.setSysId(UUID.randomUUID().toString().replace("_",""));
+            userInf.setId(UUID.randomUUID().toString().replace("_",""));
             Set<Role> setRole = new HashSet<Role>();
-            String []roleIdAr = userInf.getRoleId();
+            String []roleIdAr = userInf.getrIds();
             if(roleIdAr!=null && roleIdAr.length>0){
                 for(int i=0;i<roleIdAr.length;i++){
                     setRole.add(roleService.getRoleById(roleIdAr[i]));

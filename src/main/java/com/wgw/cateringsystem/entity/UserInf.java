@@ -1,6 +1,7 @@
 package com.wgw.cateringsystem.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +13,10 @@ import java.util.Set;
  */
 @Entity
 @Table(name="USER_INF")
-public class UserInf {
+public class UserInf  implements Serializable {
     @Id
-    private String sysId;
+    @Column(name="user_id")
+    private String id;
 
     @Column
     private String userNo;
@@ -30,18 +32,21 @@ public class UserInf {
     private String phone;
 
     @Transient
-    private String[] roleId;
+    private String[] rIds;
 
-    public String[] getRoleId() {
-        return roleId;
+
+    public String[] getrIds() {
+        return rIds;
     }
 
-    public void setRoleId(String[] roleId) {
-        this.roleId = roleId;
+    public void setrIds(String[] rIds) {
+        this.rIds = rIds;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "setUser")
-    private Set<Role> setRole = new HashSet<Role>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="user_role",joinColumns =@JoinColumn(name="u_id",referencedColumnName = "user_id"),inverseJoinColumns =@JoinColumn(name="r_id",referencedColumnName = "role_id"))
+    private Set<Role> setRole ;
+
 
     public Set<Role> getSetRole() {
         return setRole;
@@ -51,12 +56,12 @@ public class UserInf {
         this.setRole = setRole;
     }
 
-    public String getSysId() {
-        return sysId;
+    public String getId() {
+        return id;
     }
 
-    public void setSysId(String sysId) {
-        this.sysId = sysId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserNo() {
