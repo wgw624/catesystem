@@ -64,4 +64,22 @@ public class UserInfServiceImpl implements UserInfService{
         UserInf usr  = userInfRespository.save(userInf);
         return usr;
     }
+
+    @Override
+    public boolean delUser(String userId) {
+        boolean flag =true;
+        try{
+            userInfRespository.deleteById(userId);
+        }catch(Exception e){
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    @Override
+    public UserInf saveOrUpdate(UserInf userInf) {
+        UserInf user = userInfRespository.save(userInf);
+        return user;
+    }
 }

@@ -35,9 +35,9 @@ public class UserInfController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping("/getUserInf")
-    public JSONObject getUserInfo(){
-        UserInf userInf =  userInfService.getUserInf("111");
+    @RequestMapping("/getUserById")
+    public JSONObject getUserInfo(String userId){
+        UserInf userInf =  userInfService.getUserInf(userId);
 
         JSONObject json = new JSONObject();
         json.element("data",userInf);
@@ -67,12 +67,6 @@ public class UserInfController {
         user.setUserName(username);
         user.setPassword(password);
         List<UserInf> list = userInfService.getUserByParam(user);
-//        List<UserInf> list = new ArrayList<UserInf>();
-//        UserInf userInf = new UserInf();
-//        userInf.setId("111");
-//        userInf.setUserName("wgw");
-//        userInf.setShowName("位光伟");
-//        list.add(userInf);
         if(list.size()>0){
             json.element("isLogin",true);
             UserInf usr = list.get(0);
@@ -119,6 +113,23 @@ public class UserInfController {
 
         }
         return json;
+    }
+
+    @RequestMapping("/delUserById")
+    public JSONObject delUser(String id){
+        boolean flag= userInfService.delUser(id);
+        JSONObject json = new JSONObject();
+        if(flag){
+           json.element("status",1);
+           json.element("msg","删除成功");
+        }else{
+            json.element("status",0);
+            json.element("msg","删除失败");
+        }
+        return json;
+    }
+    public void saveOrUpdateUser(UserInf userInf){
+
     }
 
 }

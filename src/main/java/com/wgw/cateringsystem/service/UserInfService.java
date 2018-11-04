@@ -16,4 +16,6 @@ public interface UserInfService {
   List<UserInf> getAllUserInf();
   List<UserInf> getUserByParam(UserInf userInf);
   UserInf saveUserInf(UserInf userInf);
+  boolean delUser(String userId);
+  UserInf saveOrUpdate(UserInf userInf);
 }
