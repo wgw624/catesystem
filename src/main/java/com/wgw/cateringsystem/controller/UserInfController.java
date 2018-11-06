@@ -38,9 +38,21 @@ public class UserInfController {
     @RequestMapping("/getUserById")
     public JSONObject getUserInfo(String userId){
         UserInf userInf =  userInfService.getUserInf(userId);
-
+        JsonConfig jc = new JsonConfig();
+        jc.setIgnoreDefaultExcludes(false);
+        jc.setExcludes(new String[]{"setUser"});
         JSONObject json = new JSONObject();
-        json.element("data",userInf);
+        String rIds[] = new String[userInf.getSetRole().size()];
+        Iterator<Role> iterator = userInf.getSetRole().iterator();
+        int i=0;
+        while(iterator.hasNext()){
+            Role role = iterator.next();
+            rIds[i++]=role.getId();
+        }
+        userInf.setrIds(rIds);
+       // userInf.setrIds();
+        json.element("data",userInf,jc);
+        json.element("status",true);
         return json;
     }
     @RequestMapping("/getAllUserInf")
