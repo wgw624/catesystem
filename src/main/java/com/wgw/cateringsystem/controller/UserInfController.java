@@ -55,6 +55,34 @@ public class UserInfController {
         json.element("status",true);
         return json;
     }
+
+    @RequestMapping("/getUserAndAllRoleById")
+    public JSONObject getUserAndAllRoleById(String userId){
+
+        List<Role> listRole = roleService.getAllRole();
+        UserInf userInf =  userInfService.getUserInf(userId);
+        JsonConfig jc = new JsonConfig();
+        jc.setIgnoreDefaultExcludes(false);
+        jc.setExcludes(new String[]{"setUser"});
+        JSONObject json = new JSONObject();
+        String rIds[] = new String[userInf.getSetRole().size()];
+        Iterator<Role> iterator = userInf.getSetRole().iterator();
+        int i=0;
+        while(iterator.hasNext()){
+            Role role = iterator.next();
+            rIds[i++]=role.getId();
+        }
+        userInf.setrIds(rIds);
+        // userInf.setrIds();
+        json.element("data",userInf,jc);
+        JsonConfig jcRole = new JsonConfig();
+        jcRole.setIgnoreDefaultExcludes(false);  //设置默认忽略
+        jcRole.setExcludes(new String[]{"setUser"});
+        json.element("allRole",listRole,jcRole);
+        json.element("status",true);
+
+        return json;
+    }
     @RequestMapping("/getAllUserInf")
     public JSONObject getAllUserInfo(){
         List<UserInf> userInfList =  userInfService.getAllUserInf();
