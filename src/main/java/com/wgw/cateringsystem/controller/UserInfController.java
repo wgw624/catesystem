@@ -9,6 +9,7 @@ import com.wgw.cateringsystem.util.RequestStreamParamUtil;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.PropertyFilter;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +59,6 @@ public class UserInfController {
 
     @RequestMapping("/getUserAndAllRoleById")
     public JSONObject getUserAndAllRoleById(String userId){
-
         List<Role> listRole = roleService.getAllRole();
         UserInf userInf =  userInfService.getUserInf(userId);
         JsonConfig jc = new JsonConfig();
@@ -123,7 +123,9 @@ public class UserInfController {
     public JSONObject saveUser(@RequestBody UserInf userInf){
         JSONObject json = new JSONObject();
         try{
-            userInf.setId(UUID.randomUUID().toString().replace("_",""));
+            if(StringUtils.isBlank(userInf.getId())){
+                userInf.setId(UUID.randomUUID().toString().replace("_",""));
+            }
             Set<Role> setRole = new HashSet<Role>();
             String []roleIdAr = userInf.getrIds();
             if(roleIdAr!=null && roleIdAr.length>0){

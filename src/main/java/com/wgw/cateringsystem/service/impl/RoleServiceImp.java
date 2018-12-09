@@ -35,4 +35,9 @@ public class RoleServiceImp implements RoleService{
     public Role saveRole(Role role) {
         return roleRespository.save(role);
     }
+
+    @Override
+    public void delRoleById(String roleId) {
+        roleRespository.deleteById(roleId);
+    }
 }
