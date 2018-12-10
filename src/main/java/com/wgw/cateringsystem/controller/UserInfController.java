@@ -6,6 +6,9 @@ import com.wgw.cateringsystem.entity.UserInf;
 import com.wgw.cateringsystem.service.RoleService;
 import com.wgw.cateringsystem.service.UserInfService;
 import com.wgw.cateringsystem.util.RequestStreamParamUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.PropertyFilter;
@@ -37,6 +40,11 @@ public class UserInfController {
     private RoleService roleService;
 
     @RequestMapping("/getUserById")
+    @ApiOperation(value="根据用户ID获取用户信息")
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",name="userId",value="用户ID",required = true,dataType = "String"),
+    })
     public JSONObject getUserInfo(String userId){
         UserInf userInf =  userInfService.getUserInf(userId);
         JsonConfig jc = new JsonConfig();
@@ -58,6 +66,10 @@ public class UserInfController {
     }
 
     @RequestMapping("/getUserAndAllRoleById")
+    @ApiOperation(value="根据用户Id 获取用户信息并且获取所有角色列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",name="userId",value = "用户ID",dataType="String",required = true,defaultValue = "538a1605-fde9-4857-b3a2-a831005643a7")
+    })
     public JSONObject getUserAndAllRoleById(String userId){
         List<Role> listRole = roleService.getAllRole();
         UserInf userInf =  userInfService.getUserInf(userId);
@@ -84,6 +96,7 @@ public class UserInfController {
         return json;
     }
     @RequestMapping("/getAllUserInf")
+    @ApiOperation(value="获取所有用户信息")
     public JSONObject getAllUserInfo(){
         List<UserInf> userInfList =  userInfService.getAllUserInf();
 
@@ -97,6 +110,11 @@ public class UserInfController {
 
     @RequestMapping(value="/login")
     @ResponseBody
+    @ApiOperation(value="用户登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",name="username" ,value="登录用户名",dataType = "String",required = true),
+            @ApiImplicitParam(paramType="query",name="password",value="登录密码",dataType="String",required=true)
+    })
     public JSONObject login(String username,String password){
         JSONObject json = new JSONObject();
         JsonConfig jc = new JsonConfig();
@@ -120,6 +138,7 @@ public class UserInfController {
 
     @RequestMapping("/saveUser")
     @ResponseBody
+    @ApiOperation(value="保存或更新用户信息")
     public JSONObject saveUser(@RequestBody UserInf userInf){
         JSONObject json = new JSONObject();
         try{
@@ -158,6 +177,10 @@ public class UserInfController {
     }
 
     @RequestMapping("/delUserById")
+    @ApiOperation(value="根据用户Id 删除用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="id",value="用户Id",paramType = "query",dataType = "String",required = true)
+    })
     public JSONObject delUser(String id){
         boolean flag= userInfService.delUser(id);
         JSONObject json = new JSONObject();
@@ -170,8 +193,6 @@ public class UserInfController {
         }
         return json;
     }
-    public void saveOrUpdateUser(UserInf userInf){
 
-    }
 
 }
